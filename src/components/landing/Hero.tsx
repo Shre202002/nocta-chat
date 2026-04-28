@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Zap } from "lucide-react";
 import { AuroraBackground } from "./AuroraBackground";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useMotion } from "@/hooks/use-reduced-motion";
 
 export function Hero() {
-  const reduced = useReducedMotion();
+  const { reduced, pref, autoReason } = useMotion();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -17,11 +18,25 @@ export function Hero() {
 
   // Mobile or low-power → static render (no animation, simpler gradient)
   const useStatic = reduced || isMobile;
+  // Show "Performance mode" badge only when auto-detected (not user choice)
+  const showPerfBadge = pref === "auto" && autoReason !== null;
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20">
       <AuroraBackground />
       <div className="absolute inset-0 grid-bg opacity-40" />
+
+      {showPerfBadge && (
+        <div className="absolute top-20 left-1/2 z-20 -translate-x-1/2">
+          <div
+            className="flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur"
+            title={`Heavy effects disabled — reason: ${autoReason}`}
+          >
+            <Zap className="h-3 w-3" />
+            Performance mode: On
+          </div>
+        </div>
+      )}
 
       {/* Grok-style animated beam stack — desktop only */}
       {!useStatic && (
