@@ -1,64 +1,79 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
-      {/* Grid background */}
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20">
       <div className="absolute inset-0 grid-bg" />
-      {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-primary/10 blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 h-[300px] w-[400px] rounded-full bg-primary-glow/10 blur-[100px]" />
+      <div className="absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground/[0.03] blur-3xl" />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-[11px] text-muted-foreground"
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm text-muted-foreground">
-            <Sparkles className="h-4 w-4 text-primary" />
-            Now in public beta
-          </div>
+          <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+          Announcing Nocta 1.0
         </motion.div>
 
         <motion.h1
-          className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-6xl font-medium leading-[0.95] tracking-[-0.04em] text-foreground sm:text-7xl lg:text-[8rem]"
         >
-          AI-Powered Chatbot{" "}
-          <span className="gradient-text">for Your Website</span>
+          Understand
+          <br />
+          the universe.
         </motion.h1>
 
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mx-auto mt-8 max-w-xl text-base text-muted-foreground sm:text-lg"
         >
-          Deploy an intelligent chatbot in minutes. Customize its look, train it on your content, and watch your customer engagement soar.
+          Nocta is an AI chatbot platform built to deploy intelligent agents on any website in seconds.
         </motion.p>
 
         <motion.div
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
-          <Button size="lg" className="gradient-btn border-0 px-8 text-primary-foreground hover:opacity-90" asChild>
-            <Link to="/signup">
-              Get Started Free <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" className="border-border bg-transparent text-foreground hover:bg-secondary">
-            See Demo
-          </Button>
+          <Link
+            to="/signup"
+            className="rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:opacity-80"
+          >
+            Build with Nocta
+          </Link>
+          <a
+            href="#features"
+            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:bg-secondary"
+          >
+            Learn more
+          </a>
         </motion.div>
       </div>
+
+      {/* bottom marquee-style strip like x.ai */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.6 }}
+        className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-12 text-[11px] uppercase tracking-[0.2em] text-muted-foreground/50"
+      >
+        <span>Reasoning</span>
+        <span className="hidden sm:inline">·</span>
+        <span className="hidden sm:inline">Embed</span>
+        <span className="hidden md:inline">·</span>
+        <span className="hidden md:inline">Analytics</span>
+        <span className="hidden md:inline">·</span>
+        <span className="hidden md:inline">Realtime</span>
+      </motion.div>
     </section>
   );
 }
