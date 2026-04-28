@@ -1,21 +1,34 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { AuroraBackground } from "./AuroraBackground";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 export function Hero() {
   const reduced = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Mobile or low-power → static render (no animation, simpler gradient)
+  const useStatic = reduced || isMobile;
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20">
       <AuroraBackground />
       <div className="absolute inset-0 grid-bg opacity-40" />
 
-      {/* Grok-style horizontal beam sweeping across the wordmark */}
-      {!reduced && (
+      {/* Grok-style animated beam stack — desktop only */}
+      {!useStatic && (
         <>
           <div className="hero-beam" />
           <div className="hero-beam-core" />
+          <div className="hero-beam-streak" />
         </>
       )}
 
@@ -30,12 +43,14 @@ export function Hero() {
           Announcing Nocta 1.0
         </motion.div>
 
-        {/* Giant wordmark with light-sweep */}
+        {/* Giant Nocta wordmark */}
         <motion.h1
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="hero-wordmark select-none text-[22vw] font-semibold leading-[0.85] tracking-[-0.06em] sm:text-[20vw] lg:text-[18rem]"
+          className={`select-none text-[22vw] font-semibold leading-[0.85] tracking-[-0.06em] sm:text-[20vw] lg:text-[18rem] ${
+            useStatic ? "hero-wordmark-static" : "hero-wordmark"
+          }`}
         >
           Nocta
         </motion.h1>
