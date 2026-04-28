@@ -352,3 +352,49 @@
     text-shadow: none;
   }
 }
+
+/* ============================================================
+   Theme variants — toggled via .theme-neon / .theme-monochrome
+   on <html>. Neon = default colorful Grok-style.
+   Monochrome = pure black & white, no purple/blue tints.
+   ============================================================ */
+.theme-monochrome .aurora-blob-1,
+.theme-monochrome .aurora-blob-2,
+.theme-monochrome .aurora-blob-3 {
+  background: radial-gradient(circle at 50% 50%, oklch(0.7 0 0), oklch(0.25 0 0));
+  opacity: 0.25;
+}
+.theme-monochrome .hero-beam {
+  background: radial-gradient(
+    ellipse 55% 45% at 80% 50%,
+    oklch(1 0 0 / 0.45) 0%,
+    oklch(0.7 0 0 / 0.3) 25%,
+    transparent 70%
+  );
+}
+.theme-monochrome .hero-beam-core {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(1 0 0 / 0.55) 55%,
+    oklch(0.85 0 0 / 0.7) 75%,
+    oklch(0.6 0 0 / 0.4) 90%,
+    transparent 100%
+  );
+}
+.theme-monochrome .hero-beam-streak {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 35%,
+    oklch(1 0 0 / 0.9) 65%,
+    oklch(0.85 0 0 / 0.75) 78%,
+    transparent 95%
+  );
+}
+.theme-monochrome .hero-wordmark {
+  animation: none;
+  text-shadow: 0 0 60px oklch(1 0 0 / 0.2);
+  filter: drop-shadow(0 0 30px oklch(1 0 0 / 0.15));
+}
+
