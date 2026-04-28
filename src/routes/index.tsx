@@ -6,6 +6,7 @@ import { EmbedProcess } from "@/components/landing/EmbedProcess";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Pricing } from "@/components/landing/Pricing";
 import { Footer } from "@/components/landing/Footer";
+import { LandingControls } from "@/components/landing/LandingControls";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -21,6 +22,7 @@ function LandingPage() {
       <HowItWorks />
       <Pricing />
       <Footer />
+      <LandingControls />
     </div>
   );
 }
