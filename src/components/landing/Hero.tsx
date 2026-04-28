@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { AuroraBackground } from "./AuroraBackground";
 
 export function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20">
-      <div className="absolute inset-0 grid-bg" />
-      <div className="absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground/[0.03] blur-3xl" />
+      <AuroraBackground />
+      <div className="absolute inset-0 grid-bg opacity-60" />
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.div
