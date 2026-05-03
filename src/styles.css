@@ -281,23 +281,53 @@
     will-change: transform, opacity;
   }
 
-  /* Sharp light streak — high-contrast Grok-style highlight */
+  /* Grok-style: bright light spreading from the right edge */
+  .grok-light-right {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 80% at 100% 50%,
+        oklch(0.95 0.05 250 / 0.55) 0%,
+        oklch(0.7 0.18 270 / 0.35) 20%,
+        oklch(0.4 0.15 280 / 0.15) 45%,
+        transparent 70%);
+    pointer-events: none;
+  }
+  .grok-light-right-anim {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 95% 45%,
+        oklch(1 0 0 / 0.35) 0%,
+        oklch(0.85 0.15 270 / 0.25) 25%,
+        transparent 60%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    animation: grok-light-pulse 8s ease-in-out infinite alternate;
+    will-change: opacity, transform;
+  }
+  @keyframes grok-light-pulse {
+    0%   { opacity: 0.6; transform: translateX(-2%) scale(1); }
+    100% { opacity: 1;   transform: translateX(2%) scale(1.08); }
+  }
+
+  /* Sharp light streak — high-contrast Grok-style highlight from the right */
   .hero-beam-streak {
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
-    height: 4vh;
+    height: 6vh;
     transform: translateY(-50%);
     background: linear-gradient(
       90deg,
       transparent 0%,
-      transparent 35%,
-      oklch(1 0 0 / 0.9) 65%,
-      oklch(0.95 0.1 270 / 0.8) 78%,
-      transparent 95%
+      transparent 40%,
+      oklch(1 0 0 / 0.7) 70%,
+      oklch(0.9 0.12 270 / 0.6) 85%,
+      transparent 100%
     );
-    filter: blur(8px);
+    filter: blur(10px);
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 2;
