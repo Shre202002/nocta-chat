@@ -21,11 +21,12 @@ export function AuroraBackground() {
     window.addEventListener("resize", check);
 
     // Lazy mount after first paint
-    const idle = (cb: () => void) =>
-      "requestIdleCallback" in window
-        ? (window as Window & { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(cb)
-        : window.setTimeout(cb, 200);
-    idle(() => setMounted(true));
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void) => number;
+    };
+    const id = w.requestIdleCallback
+      ? w.requestIdleCallback(() => setMounted(true))
+      : window.setTimeout(() => setMounted(true), 200);
 
     const onVis = () => setVisible(!document.hidden);
     document.addEventListener("visibilitychange", onVis);
