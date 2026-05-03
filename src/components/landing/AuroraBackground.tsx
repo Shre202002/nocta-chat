@@ -1,12 +1,43 @@
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /**
  * Grok-style animated aurora background.
- * Disables drift animations & heavy blur when prefers-reduced-motion
- * is set or the device looks low-power. Falls back to a static gradient.
+ * - Disables drift animations & heavy blur when prefers-reduced-motion
+ *   is set or the device looks low-power.
+ * - Lazy mounts the animated layer after first paint to reduce initial load.
+ * - Pauses animation when the tab is hidden.
+ * - Falls back to a simpler static gradient on small screens (<=640px).
  */
 export function AuroraBackground() {
   const reduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [isSmall, setIsSmall] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsSmall(window.innerWidth <= 640);
+    check();
+    window.addEventListener("resize", check);
+
+    // Lazy mount after first paint
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void) => number;
+    };
+    const id = w.requestIdleCallback
+      ? w.requestIdleCallback(() => setMounted(true))
+      : window.setTimeout(() => setMounted(true), 200);
+
+    const onVis = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+
+    return () => {
+      window.removeEventListener("resize", check);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
+
+  const animateRight = mounted && visible && !reduced && !isSmall;
 
   return (
     <div
@@ -17,8 +48,8 @@ export function AuroraBackground() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,oklch(0_0_0)_75%)]" />
 
       {/* Grok-style: dark left, bright spreading light from the right */}
-      <div className="grok-light-right" />
-      {!reduced && <div className="grok-light-right-anim" />}
+      <div className={isSmall ? "grok-light-right-static" : "grok-light-right"} />
+      {animateRight && <div className="grok-light-right-anim" />}
       <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-background via-background/90 to-transparent" />
 
       {/* Bottom fade into black */}
