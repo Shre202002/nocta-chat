@@ -38,14 +38,8 @@ export function Hero() {
         </div>
       )}
 
-      {/* Grok-style animated beam stack — desktop only */}
-      {!useStatic && (
-        <>
-          <div className="hero-beam" />
-          <div className="hero-beam-core" />
-          <div className="hero-beam-streak" />
-        </>
-      )}
+      {/* Grok-style soft right-side light streak over wordmark */}
+      {!useStatic && <div className="hero-beam-streak" />}
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center text-center">
         <motion.div
